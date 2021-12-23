@@ -1,0 +1,31 @@
+Instantiating a PySpark Jupyter Lab
+------------------------------------
+1. Go to EMR Dashboard
+2. Click on Notebooks  Click on Create Notebook
+3. Give a name to the notebook
+4. Select Create Cluster
+4. Keep everything default and click on Create Notebook
+
+1. Create S3 bucket and load data in it
+2. Create Metadata for automobile dataset in Glue
+    - Go to Glue Dashboard
+    - On left hand menu click Databases > Add database > Create database named           'tigeranalytics'
+    - Click on Tables > Add Table > Add Table Manually 
+        - Give table name as 'employee' and select database 'tigeranalytics' > Next
+        - Select Data Store > S3 > Set the Location of dataset > Next
+        - Choose Data Format > CSV > Delimiter as , > Next
+        - Create Schema with appropriate datatypes > Next
+        - Skip Partition Indices as we didnt set any partition key > Next
+        - Review the settings > Finish
+        
+3. Create Athena Instance and connect with metadata for Interactive Query
+    - Go to Athena Dashboard and Click on Get Started
+
+
+Using Glue Crawler
+===================
+Automobile Dataset----> S3 ------> AWS Glue ----> Athena
+1. Create S3 bucket and load data in it
+2. Go to Glue Dashboard > Crawler > Add Crawler. Follow the instructions and connect with the data source at folder level and Run the Crawler.
+3. Create Athena Instance and connect with metadata for Interactive Query
+    - Go to Athena Dashboard and Click on Get Started

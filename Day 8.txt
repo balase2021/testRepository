@@ -1,0 +1,11 @@
+create table emp
+(eid int primary key,
+ename text,
+ecity text,
+esal int)
+
+https://aws.amazon.com/premiumsupport/knowledge-center/s3-data-pipeline-transfer/  -- assignment
+
+https://gitforwindows.org/
+
+aws s3 cp s3://egbucket11/source/employee s3://egbucket22/sink/

@@ -1,0 +1,87 @@
+Lab1: Initialize EMR cluster
+1. IAM
+    - Create a role for EMR service (AdministratorAccess)        
+    - Select EMR > EMR Role for EC2
+2. Create the Key Pair (ppk file)
+    - Go to EC2 dashboard
+    - On the left side menu > Network and Security > Key Pairs
+    - Select ppk file and downloadd the same (Download will be automatic)
+3. Setup EMR cluster
+    - Go to EMR dashboard
+    - Click on Create Cluster
+
+
+- We need to enable Port 22 in master. To add the rule in firewall
+        - Ensure you are in the dashboard of the cluster you created,
+        - Go to Security and Access >Security Groups for Master
+        - Select ElasticMapReduce-master > Inbound Rules > Edit inbound rules> Add rule
+    Select SSH & MyIP and Click on Save Rules
+
+hdfs dfs -ls /  -- to access root folder
+
+default port no:
+ssh - 22
+hue - 8888
+
+
+Access Hue in EMR cluster
+==========================
+1. Default port number of Hue Web UI -----> 8888
+Select ElasticMapReduce-master > Inbound Rules > Edit inbound rules> Add rule
+    Select CustomTCP , Port no 8888 & MyIP and Click on Save Rules
+2. Try accessing Hue UI using master hostname with port no 8888
+    e.g. http://ec2-44-201-72-220.compute-1.amazonaws.com:8888/
+
+
+
+hIVE :
+
+hive
+
+create database awstest;
+
+use awstest;
+
+ create table employee
+    > (eid int,
+    > ename string,
+    > ecity string,
+    > esal int)
+    > ROW FORMAT DELIMITED
+    > FIELDS TERMINATED BY ','
+    > LINES TERMINATED BY '\n';
+
+LOAD DATA INPATH 's3://dataset969/employee/employee' INTO TABLE employee;
+
+
+
+Assignment :
+------------
+
+ create table txns
+    (txnid int,
+    txndate string,
+    custid int,
+    amount double,
+    category string,
+    subcategory string,
+    city string,
+    state string,
+    txntype string)
+    ROW FORMAT DELIMITED
+    FIELDS TERMINATED BY ','
+    LINES TERMINATED BY '\n';
+
+LOAD DATA INPATH 's3://dataset969/transactions/txns' INTO TABLE txns;
+
+select * from txns limit 3;
+
+select category, sum(amount) as total_revenue from txns group by category;
+
+select count(txnid) as total_no_trans, sum(amount) as total_sum_trans from txns where txntype='cash';
+
+select category, count(category) from txns group by category order by category desc limit 1;
+
+select category, count(category) from txns group by category order by category limit 1;
+
+ select subcategory, count(subcategory) from txns where category='Air Sports' group by subcategory order by subcategory desc limit 1;
